@@ -607,7 +607,7 @@ LOAD /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.e
                 0x00000000000002cc       0x34 /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard/libc.a(lib_a-__atexit.o)
  .ARM.attributes
                 0x0000000000000300       0x22 /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard/crtn.o
-OUTPUT(MCTL_Snake_1.elf elf32-littlearm)
+OUTPUT(MCT_Snake.elf elf32-littlearm)
 
 .debug_info     0x0000000000000000     0x1484
  .debug_info    0x0000000000000000      0x294 src/gpio.o
@@ -668,27 +668,27 @@ OUTPUT(MCTL_Snake_1.elf elf32-littlearm)
  .debug_macro   0x0000000000017420       0xd4 src/stm32f3xx_it.o
  .debug_macro   0x00000000000174f4       0xdc src/system_stm32f3xx.o
 
-.debug_line     0x0000000000000000     0x1aa5
- .debug_line    0x0000000000000000      0x52d src/gpio.o
- .debug_line    0x000000000000052d      0x5c0 src/main.o
- .debug_line    0x0000000000000aed      0x515 src/rcc.o
- .debug_line    0x0000000000001002      0x542 src/stm32f3xx_it.o
- .debug_line    0x0000000000001544      0x4e2 src/system_stm32f3xx.o
- .debug_line    0x0000000000001a26       0x7f startup/startup_stm32f303xe.o
+.debug_line     0x0000000000000000     0x1a27
+ .debug_line    0x0000000000000000      0x512 src/gpio.o
+ .debug_line    0x0000000000000512      0x5a5 src/main.o
+ .debug_line    0x0000000000000ab7      0x4fa src/rcc.o
+ .debug_line    0x0000000000000fb1      0x527 src/stm32f3xx_it.o
+ .debug_line    0x00000000000014d8      0x4d0 src/system_stm32f3xx.o
+ .debug_line    0x00000000000019a8       0x7f startup/startup_stm32f303xe.o
 
-.debug_str      0x0000000000000000    0x80411
- .debug_str     0x0000000000000000    0x7fcf6 src/gpio.o
-                                      0x7fe6a (size before relaxing)
- .debug_str     0x000000000007fcf6      0x1a3 src/main.o
-                                      0x7ffac (size before relaxing)
- .debug_str     0x000000000007fe99       0x18 src/rcc.o
-                                      0x7fe35 (size before relaxing)
- .debug_str     0x000000000007feb1      0x433 src/stm32f3xx_it.o
-                                      0x80368 (size before relaxing)
- .debug_str     0x00000000000802e4       0xfe src/system_stm32f3xx.o
-                                      0x7ff12 (size before relaxing)
- .debug_str     0x00000000000803e2       0x2f startup/startup_stm32f303xe.o
-                                         0x91 (size before relaxing)
+.debug_str      0x0000000000000000    0x80408
+ .debug_str     0x0000000000000000    0x7fced src/gpio.o
+                                      0x7fe61 (size before relaxing)
+ .debug_str     0x000000000007fced      0x1a3 src/main.o
+                                      0x7ffa3 (size before relaxing)
+ .debug_str     0x000000000007fe90       0x18 src/rcc.o
+                                      0x7fe2c (size before relaxing)
+ .debug_str     0x000000000007fea8      0x433 src/stm32f3xx_it.o
+                                      0x8035f (size before relaxing)
+ .debug_str     0x00000000000802db       0xfe src/system_stm32f3xx.o
+                                      0x7ff09 (size before relaxing)
+ .debug_str     0x00000000000803d9       0x2f startup/startup_stm32f303xe.o
+                                         0x88 (size before relaxing)
 
 .comment        0x0000000000000000       0x7f
  .comment       0x0000000000000000       0x7f src/gpio.o
