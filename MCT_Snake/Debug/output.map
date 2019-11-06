@@ -87,7 +87,7 @@ Discarded input sections
  .group         0x0000000000000000        0xc src/main.o
  .group         0x0000000000000000        0xc src/main.o
  .text          0x0000000000000000        0x0 src/main.o
- .data          0x0000000000000000        0x4 src/main.o
+ .data          0x0000000000000000        0x0 src/main.o
  .debug_macro   0x0000000000000000      0xa72 src/main.o
  .debug_macro   0x0000000000000000       0x2b src/main.o
  .debug_macro   0x0000000000000000       0x28 src/main.o
@@ -609,21 +609,21 @@ LOAD /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.e
                 0x0000000000000300       0x22 /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard/crtn.o
 OUTPUT(MCT_Snake.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000     0x1484
+.debug_info     0x0000000000000000     0x146a
  .debug_info    0x0000000000000000      0x294 src/gpio.o
- .debug_info    0x0000000000000294      0x68d src/main.o
- .debug_info    0x0000000000000921      0x1e7 src/rcc.o
- .debug_info    0x0000000000000b08      0x55a src/stm32f3xx_it.o
- .debug_info    0x0000000000001062      0x400 src/system_stm32f3xx.o
- .debug_info    0x0000000000001462       0x22 startup/startup_stm32f303xe.o
+ .debug_info    0x0000000000000294      0x673 src/main.o
+ .debug_info    0x0000000000000907      0x1e7 src/rcc.o
+ .debug_info    0x0000000000000aee      0x55a src/stm32f3xx_it.o
+ .debug_info    0x0000000000001048      0x400 src/system_stm32f3xx.o
+ .debug_info    0x0000000000001448       0x22 startup/startup_stm32f303xe.o
 
-.debug_abbrev   0x0000000000000000      0x59a
+.debug_abbrev   0x0000000000000000      0x591
  .debug_abbrev  0x0000000000000000       0xcc src/gpio.o
- .debug_abbrev  0x00000000000000cc      0x17f src/main.o
- .debug_abbrev  0x000000000000024b       0xcc src/rcc.o
- .debug_abbrev  0x0000000000000317      0x160 src/stm32f3xx_it.o
- .debug_abbrev  0x0000000000000477      0x111 src/system_stm32f3xx.o
- .debug_abbrev  0x0000000000000588       0x12 startup/startup_stm32f303xe.o
+ .debug_abbrev  0x00000000000000cc      0x176 src/main.o
+ .debug_abbrev  0x0000000000000242       0xcc src/rcc.o
+ .debug_abbrev  0x000000000000030e      0x160 src/stm32f3xx_it.o
+ .debug_abbrev  0x000000000000046e      0x111 src/system_stm32f3xx.o
+ .debug_abbrev  0x000000000000057f       0x12 startup/startup_stm32f303xe.o
 
 .debug_aranges  0x0000000000000000       0xe8
  .debug_aranges

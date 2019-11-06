@@ -17,7 +17,6 @@
 static volatile int8_t i=0,j=0;
 static volatile uint32_t x,y;
 static volatile _Bool matrix[8][8]={0};
-static volatile uint8_t * A=&matrix[0][0];
 uint8_t k,l;
 
 int main(void)
@@ -112,7 +111,7 @@ void ADC_Config(void){
 	/*
 	 * ADC3 Config
 	 */
-	ADC3->SQR1 |= 0x2 << 6; 					// 1st conv. in regular sequence: Channel 1 (PB1)
+	ADC3->SQR1 |= 0x1 << 6; 					// 1st conv. in regular sequence: Channel 1 (PB1)
 	ADC3->SMPR1 |= 0b111 << 3; 					// Channel 1: Sample time 601.5 ns
 	ADC3->CFGR |= 0b11 << ADC_CFGR_RES_Pos;		// Auflösung sind 6 Bit
 	ADC3->CR &= ~(0b11 << 28); 					// Voltage regulator: Intermediate state
