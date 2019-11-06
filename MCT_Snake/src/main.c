@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @author  Lukas Güldemstein
+  * @author  Lukas Güldemstein & Christopher Schultz
   * @version V1.0
   * @date    01-December-2013
   * @brief   Default main function.
