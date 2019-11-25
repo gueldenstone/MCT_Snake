@@ -30,4 +30,9 @@ void RCC_Config(void){
 	RCC->AHBENR |= RCC_AHBENR_ADC34EN; // Takt fuer ADC 3+4
 
 
+	RCC->BDCR |= RCC_BDCR_RTCEN;
+	RCC->BDCR |= RCC_BDCR_RTCSEL_LSI;
+
+
+
 }

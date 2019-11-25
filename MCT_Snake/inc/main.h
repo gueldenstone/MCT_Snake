@@ -8,30 +8,22 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f3xx.h"
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 
-/* USER CODE END Includes */
+/* Globale Variablen ---------------------------------------------------------*/
+volatile int8_t i,j, randx, randy;
+volatile uint32_t x,y;
+volatile uint16_t t1, t2, dma[2];
+volatile _Bool position[8][8],zufall[8][8], output[8][8], output_flag;
 
-/* Exported types ------------------------------------------------------------*/
-/* USER CODE BEGIN ET */
 
-/* USER CODE END ET */
-
-/* Exported constants --------------------------------------------------------*/
-/* USER CODE BEGIN EC */
-
-/* USER CODE END EC */
-
-/* Exported macro ------------------------------------------------------------*/
-/* USER CODE BEGIN EM */
-
-/* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-void TIM_Config(void);
-void ADC_Config(void);
+void randompoint(void);
+void allones(void);
+void allzeroes(void);
+void delay(uint32_t time);
+void blinkall(uint32_t blinks);
 
 /* USER CODE BEGIN EFP */
 

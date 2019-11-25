@@ -1,0 +1,5 @@
+"src/config.o"
+"src/interrupts.o"
+"src/main.o"
+"src/system_stm32f3xx.o"
+"startup/startup_stm32f303xe.o"

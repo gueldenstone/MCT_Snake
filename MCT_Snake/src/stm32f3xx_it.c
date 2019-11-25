@@ -22,11 +22,6 @@ void SysTick_Handler(void){
 
 }
 
-void EXTI1_IRQHandler(void){
-	NVIC_ClearPendingIRQ(EXTI1_IRQn);
-	EXTI->PR |= EXTI_PR_PR1;
-}
-
 
 /******************************************************************************/
 /*            	  	    Processor Exceptions Handlers                         */
