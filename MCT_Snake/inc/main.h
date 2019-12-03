@@ -12,7 +12,7 @@ extern "C" {
 /* Globale Variablen ---------------------------------------------------------*/
 volatile int8_t i,j, randx, randy;
 volatile uint32_t x,y;
-volatile uint16_t t1, t2, dma[2];
+volatile uint16_t t1, t2, adcresults[2];
 volatile _Bool position[8][8],zufall[8][8], output[8][8], output_flag;
 
 

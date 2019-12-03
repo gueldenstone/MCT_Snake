@@ -13,24 +13,24 @@
 #include "config.h"
 
 //Variablen
-volatile int8_t i=0,j=0, randx=5, randy=5;
+volatile int8_t i=0,j=0, randx, randy;
 volatile uint32_t x,y;
-volatile uint16_t t1, t2=66, dma[2];
-volatile _Bool position[8][8]={0},zufall[8][8]={0}, output[8][8]={0}, output_flag;
+volatile uint16_t t1, t2=66, adcresults[2];
+volatile _Bool position[8][8]={0},zufall[8][8]={0}, output[8][8]={0};
 
 int main(void)
 {
 	__disable_irq();				// Interrupts aus
-	RCC_Config();					// Clock Config
+	RCC_Config();					// Clock Config mit 72Mhz
 	GPIO_Config(); 					// GPIO Config
 	TIM_Config();					// Timer Configuration
 	ADC_Config();					// ADC Config
-	DMA_Config();					// DMA_Config
-	EXTI_Config();
+	DMA_Config();					// DMA Config
+	EXTI_Config();					// EXTI Config
 	__enable_irq();					// Interrupts an
 
 	randompoint();
-	ADC1->CR|= ADC_CR_ADSTART;
+	ADC1->CR |= ADC_CR_ADSTART;
 
 	//Loop forever
 	while(1){
@@ -43,6 +43,7 @@ int main(void)
 			randompoint();
 			NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 		}
+		__WFI();
 	}
 
 }
