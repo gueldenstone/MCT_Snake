@@ -4,6 +4,8 @@
 
 // Externe Variablen
 extern volatile TypeDefDirection direction;
+extern volatile _Bool fail;
+extern volatile uint32_t x1,y1, x2, y2, x3, y3;
 void SysTick_Handler(void){
 
 }
@@ -33,34 +35,37 @@ void TIM6_DAC_IRQHandler(void){
 
 /* Jede Sekunde wird der Wert des von direction abgefragt und die Schlange bewegt ein Feld in die entsprechende Richtung */
 void TIM3_IRQHandler(void){
+
+	position1[x1][y1]=0;
+	position1[x2][y2]=0;
+	position1[x3][y3]=0;
+	x3=x2;
+	x2=x1;
+	y3=y2;
+	y2=y1;
+	position1[x2][y2]=1;
+	position1[x3][y3]=1;
 	switch(direction){
 	case left:
-		position1[x][y]=0;
-		position1[--x][y]=1;
+		position1[--x1][y1]=1;
 		break;
 	case right:
-		position1[x][y]=0;
-		position1[++x][y]=1;
+		position1[++x1][y1]=1;
 		break;
 	case up:
-		position1[x][y]=0;
-		position1[x][++y]=1;
+		position1[x1][++y1]=1;
 		break;
 	case down:
-		position1[x][y]=0;
-		position1[x][--y]=1;
+		position1[x1][--y1]=1;
 		break;
 	default:
 		break;
 	}
-	if(x>8 || x<0 || y>8 || y<0){
-		TIM3->CR1 &= ~TIM_CR1_CEN;
-		position1[x][y]=0;
-		zufall[randx][randy]=0;
-//		blinkall(2);
-		position1[4][4]=1;
+	if(x1>7 || x1<0 || y1>7 || y1<0)
+		fail=1;
+	if(x1==x2 && y1==y2)
+		fail=1;
 
-	}
 	/* ISR finished */
 	TIM3->SR &= ~(TIM_SR_UIF);
 }
@@ -91,7 +96,7 @@ void DMA1_Channel1_IRQHandler(void){
 	DMA1->IFCR |= DMA_IFCR_CTCIF1;
 }
 void EXTI0_IRQHandler(void){
-	randompoint();							// Zufälligen punkt erzeugen
+	//randompoint();							// Zufälligen punkt erzeugen
 	TIM3->CR1 |= TIM_CR1_CEN;				// Enable Timer 3
 	//ISR finished
 	EXTI->PR |= EXTI_PR_PR0;

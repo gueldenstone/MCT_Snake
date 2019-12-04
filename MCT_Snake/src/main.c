@@ -14,9 +14,9 @@
 
 //Variablen
 volatile int8_t i=0,j=0, randx, randy;
-volatile uint32_t x,y;
+volatile int8_t x1,y1, x2, y2, x3, y3;
 volatile uint16_t t1, t2=66, adcresults[2];
-volatile _Bool position1[8][8]={0}, position2[8][8]={0}, position3[8][8]={0},zufall[8][8]={0}, output[8][8]={0};
+volatile _Bool position1[8][8]={0}, position2[8][8]={0}, position3[8][8]={0},zufall[8][8]={0}, output[8][8]={0}, fail;
 volatile TypeDefDirection direction;
 
 int main(void)
@@ -32,18 +32,40 @@ int main(void)
 
 	randompoint();
 	ADC1->CR |= ADC_CR_ADSTART;
-	x=4;
-	y=4;
-	position1[x][y] =1;
+	x1=4;
+	y1=4;
+	x2=4;
+	y2=3;
+	x3=4;
+	y3=2;
+	position1[x1][y1] =1;
+	position1[x2][y2] =1;
+	position1[x3][y3] =1;
+	direction = up;
 	//Loop forever
 	while(1){
 		/* Spiel 2 (Schlange) */
-
+		if(fail){
+			TIM3->CR1 &= ~TIM_CR1_CEN;
+			position1[x1][y1]=0;
+			position1[x2][y2]=0;
+			position1[x3][y3]=0;
+			x1=4;
+			y1=4;
+			x2=4;
+			y2=3;
+			x3=4;
+			y3=2;
+			position1[x1][y1]=1;
+			position1[x2][y2]=1;
+			position1[x3][y3]=1;
+			fail=0;
+		}
 
 		/* Spiel 1 */
-		if(x == randx && y == randy){
+		if(x1 == randx && y1 == randy){
 			NVIC_DisableIRQ(DMA1_Channel1_IRQn);
-			position1[x][y] = 0;
+			//position1[x][y] = 0;
 			zufall[randx][randy]=0;
 			//blinkall(5);
 			randompoint();
