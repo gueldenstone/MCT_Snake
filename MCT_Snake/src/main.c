@@ -16,7 +16,8 @@
 volatile int8_t i=0,j=0, randx, randy;
 volatile uint32_t x,y;
 volatile uint16_t t1, t2=66, adcresults[2];
-volatile _Bool position[8][8]={0},zufall[8][8]={0}, output[8][8]={0};
+volatile _Bool position1[8][8]={0}, position2[8][8]={0}, position3[8][8]={0},zufall[8][8]={0}, output[8][8]={0};
+volatile TypeDefDirection direction;
 
 int main(void)
 {
@@ -31,15 +32,20 @@ int main(void)
 
 	randompoint();
 	ADC1->CR |= ADC_CR_ADSTART;
-
+	x=4;
+	y=4;
+	position1[x][y] =1;
 	//Loop forever
 	while(1){
+		/* Spiel 2 (Schlange) */
+
+
 		/* Spiel 1 */
 		if(x == randx && y == randy){
 			NVIC_DisableIRQ(DMA1_Channel1_IRQn);
-			position[x][y] = 0;
+			position1[x][y] = 0;
 			zufall[randx][randy]=0;
-			blinkall(5);
+			//blinkall(5);
 			randompoint();
 			NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 		}

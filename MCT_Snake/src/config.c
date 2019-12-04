@@ -24,7 +24,7 @@ void RCC_Config(void){
 	/* Peripherie Clock */
 
   	//Timer
-  	RCC->APB1ENR |= RCC_APB1ENR_TIM6EN | RCC_APB1ENR_TIM2EN | RCC_APB1ENR_TIM7EN; //Enable Timer 2, 6 & 7
+  	RCC->APB1ENR |= RCC_APB1ENR_TIM6EN | RCC_APB1ENR_TIM2EN | RCC_APB1ENR_TIM7EN | RCC_APB1ENR_TIM3EN; //Enable Timer 2, 6 & 7
 
 	//GPIO
 	RCC->AHBENR |= RCC_AHBENR_GPIOAEN; //GPIO A
@@ -129,6 +129,13 @@ void TIM_Config(void){
 	TIM2->CR2 |= 0b010 << TIM_CR2_MMS_Pos; 		// Trigger event on Update
 	TIM2->DIER |= TIM_DIER_UIE; 				// Enable Interrupt on Update
 	TIM2->CR1 |= TIM_CR1_CEN;					// Enable Timer2
+
+	/* Timer 3, Timing für Schlangenbewegung */
+	TIM3->PSC = (SystemCoreClock/1000)-1;		// Prescaler setzten, ARR in 0,1ms
+	TIM3->ARR = 10000;							// set counter Value every 1s move forward
+	TIM3->DIER |= TIM_DIER_UIE; 				// Enable Interrupt on Update
+//	TIM3->CR1 |= TIM_CR1_CEN;					// Enable Timer 3
+	NVIC_EnableIRQ(TIM3_IRQn);					// Enable NVIC on TIM3
 }
 
 void ADC_Config(void){
