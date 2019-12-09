@@ -699,12 +699,12 @@ OUTPUT(MCT_Snake.elf elf32-littlearm)
  .debug_macro   0x0000000000017385       0xe7 src/main.o
  .debug_macro   0x000000000001746c       0xdc src/system_stm32f3xx.o
 
-.debug_line     0x0000000000000000     0x1770
+.debug_line     0x0000000000000000     0x1768
  .debug_line    0x0000000000000000      0x5f7 src/config.o
- .debug_line    0x00000000000005f7      0x5f2 src/interrupts.o
- .debug_line    0x0000000000000be9      0x638 src/main.o
- .debug_line    0x0000000000001221      0x4d0 src/system_stm32f3xx.o
- .debug_line    0x00000000000016f1       0x7f startup/startup_stm32f303xe.o
+ .debug_line    0x00000000000005f7      0x5ea src/interrupts.o
+ .debug_line    0x0000000000000be1      0x638 src/main.o
+ .debug_line    0x0000000000001219      0x4d0 src/system_stm32f3xx.o
+ .debug_line    0x00000000000016e9       0x7f startup/startup_stm32f303xe.o
 
 .debug_str      0x0000000000000000    0x806ad
  .debug_str     0x0000000000000000    0x80440 src/config.o
