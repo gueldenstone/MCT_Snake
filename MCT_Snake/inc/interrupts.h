@@ -14,13 +14,11 @@ void SVC_Handler(void);
 void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
-//EXTI
 void EXTI1_IRQHandler(void);
-//TIM
 void TIM6_DAC_IRQHandler(void);
 void TIM2_IRQHandler(void);
 void TIM3_IRQHandler(void);
-//ADC
+void passthrough(void);
 
 #endif
 
