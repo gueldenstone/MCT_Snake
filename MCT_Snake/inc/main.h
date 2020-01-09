@@ -10,9 +10,6 @@ extern "C" {
 #include "stm32f3xx.h"
 
 /* Globale Variablen ---------------------------------------------------------*/
-volatile int8_t i,j, randx, randy;
-volatile uint16_t t1, t2, adcresults[2];
-volatile _Bool position1[8][8],zufall[8][8], output[8][8], output_flag;
 
 typedef enum{left, right, up, down}TypeDefDirection;
 
