@@ -164,6 +164,7 @@ void ADC_Config(void){
 	while((ADC1->ISR & ADC_ISR_ADRD) == 0){}  	// Warte bis ADC bereit
 }
 
+extern volatile uint16_t adc1buffer[2];
 void DMA_Config(void){
 	//DMA Channel 1 für ADC1
 	DMA1_Channel1->CCR |= DMA_CCR_TCIE;												// Interrupt after transfer
@@ -171,7 +172,7 @@ void DMA_Config(void){
 	DMA1_Channel1->CCR |= DMA_CCR_CIRC;												// Circular mode enabled
 	DMA1_Channel1->CCR |= (0b1 << DMA_CCR_PSIZE_Pos) | (0b1 << DMA_CCR_MSIZE_Pos);	// Peripheral & Memory size = 16bit
 	DMA1_Channel1->CNDTR = 0x2;														// number of data transfers = 2
-	DMA1_Channel1->CMAR = (uint32_t)adcresults;										// Memory address setzten auf Array "adcresults"
+	DMA1_Channel1->CMAR = (uint32_t)adc1buffer;										// Memory address setzten auf Array "adcresults"
 	DMA1_Channel1->CPAR = (uint32_t)(&(ADC1->DR));									// peripheral address is ADC1.DR
 	DMA1_Channel1->CCR |= DMA_CCR_EN;												// Enable DMA1
 	NVIC_EnableIRQ(DMA1_Channel1_IRQn);												// DMA Interrupt Handler

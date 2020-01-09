@@ -23,6 +23,7 @@ void allones(void);
 void allzeroes(void);
 void delay(uint32_t time);
 void blinkall(uint32_t blinks);
+void resetposition();
 
 /* USER CODE BEGIN EFP */
 
