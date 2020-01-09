@@ -6,7 +6,7 @@
 extern volatile TypeDefDirection direction;
 extern volatile _Bool position[8][8], zufall[8][8],fail;
 extern volatile uint16_t t1, t2, adc1buffer[2];
-extern volatile int8_t x1,y11, x2, y2, x3, y3;
+extern volatile int8_t x1,y1, x2, y2, x3, y3;
 
 
 /* Die ISR des Timers 6 bildet mit Hilfe der Indizes i und j eine Art for-Schleife,
@@ -41,34 +41,34 @@ void TIM6_DAC_IRQHandler(void){
 /* Jede Sekunde wird der Wert des von direction abgefragt und die Schlange bewegt
  * ein Feld in die entsprechende Richtung */
 void TIM3_IRQHandler(void){
-	position[x1][y11]=0;
+	position[x1][y1]=0;
 	position[x2][y2]=0;
 	position[x3][y3]=0;
 	x3=x2;
 	x2=x1;
 	y3=y2;
-	y2=y11;
+	y2=y1;
 	position[x2][y2]=1;
 	position[x3][y3]=1;
 	switch(direction){
 	case left:
-		position[--x1][y11]=1;
+		position[--x1][y1]=1;
 		break;
 	case right:
-		position[++x1][y11]=1;
+		position[++x1][y1]=1;
 		break;
 	case up:
-		position[x1][++y11]=1;
+		position[x1][++y1]=1;
 		break;
 	case down:
-		position[x1][--y11]=1;
+		position[x1][--y1]=1;
 		break;
 	default:
 		break;
 	}
-	if(x1>7 || x1<0 || y11>7 || y11<0)
+	if(x1>7 || x1<0 || y1>7 || y1<0)
 		fail=1;
-	if(x1==x2 && y11==y2)
+	if(x1==x2 && y1==y2)
 		fail=1;
 
 	/* ISR finished */
@@ -115,13 +115,13 @@ void EXTI0_IRQHandler(void){
 }
 
 void passthrough(void){
-	position[x1][y11]=0;
+	position[x1][y1]=0;
 	position[x2][y2]=0;
 	position[x3][y3]=0;
 	x3=x2;
 	x2=x1;
 	y3=y2;
-	y2=y11;
+	y2=y1;
 	position[x2][y2]=1;
 	position[x3][y3]=1;
 }

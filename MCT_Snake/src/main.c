@@ -14,7 +14,7 @@
 
 //Variablen
 volatile int8_t randx, randy;
-volatile int8_t x1, y11, x2, y2, x3, y3;
+volatile int8_t x1, y1, x2, y2, x3, y3;
 volatile uint16_t t1, t2=66, adc1buffer[2];
 volatile _Bool position[8][8]={0}, zufall[8][8]={0}, fail;
 volatile TypeDefDirection direction;
@@ -42,7 +42,7 @@ int main(void)
 		}
 
 		/* Spiel 1 */
-		if(x1 == randx && y11 == randy){
+		if(x1 == randx && y1 == randy){
 			NVIC_DisableIRQ(DMA1_Channel1_IRQn);
 			zufall[randx][randy]=0;
 			randompoint();
@@ -67,16 +67,16 @@ void delay(uint32_t usec){
 }
 
 void resetposition(void){
-	position[x1][y11]=0;
+	position[x1][y1]=0;
 	position[x2][y2]=0;
 	position[x3][y3]=0;
 	x1=4;
-	y11=4;
+	y1=4;
 	x2=4;
 	y2=3;
 	x3=4;
 	y3=2;
-	position[x1][y11]=1;
+	position[x1][y1]=1;
 	position[x2][y2]=1;
 	position[x3][y3]=1;
 	fail=0;

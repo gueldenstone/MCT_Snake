@@ -29,7 +29,6 @@ randy               0x1               src/config.o
 j                   0x1               src/config.o
 __lock___arc4random_mutex
                     0x1               /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard/libc.a(lib_a-lock.o)
-y11                 0x1               src/main.o
 output              0x40              src/config.o
 y3                  0x1               src/main.o
 __lock___env_recursive_mutex
@@ -54,6 +53,7 @@ __lock___at_quick_exit_mutex
 __lock___dd_hash_mutex
                     0x1               /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard/libc.a(lib_a-lock.o)
 __lock___tz_mutex   0x1               /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard/libc.a(lib_a-lock.o)
+y1                  0x1               src/main.o
 position1           0x40              src/config.o
 __lock___sfp_recursive_mutex
                     0x1               /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard/libc.a(lib_a-lock.o)
@@ -570,17 +570,17 @@ LOAD /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.e
                 0x000000002000055e                t1
                 0x0000000020000560                output_flag
                 0x0000000020000564                position1
- COMMON         0x00000000200005a4        0xe src/main.o
+ COMMON         0x00000000200005a4        0xf src/main.o
                 0x00000000200005a4                fail
-                0x00000000200005a5                y11
-                0x00000000200005a6                y3
-                0x00000000200005a7                y2
-                0x00000000200005a8                x2
-                0x00000000200005a9                direction
+                0x00000000200005a5                y3
+                0x00000000200005a6                y2
+                0x00000000200005a7                x2
+                0x00000000200005a8                direction
                 0x00000000200005ac                adc1buffer
                 0x00000000200005b0                x3
                 0x00000000200005b1                x1
- *fill*         0x00000000200005b2        0x2 
+                0x00000000200005b2                y1
+ *fill*         0x00000000200005b3        0x1 
  COMMON         0x00000000200005b4       0x21 /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard/libc.a(lib_a-lock.o)
                 0x00000000200005b4                __lock___atexit_recursive_mutex
                 0x00000000200005b8                __lock___arc4random_mutex
@@ -647,12 +647,12 @@ LOAD /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.e
                 0x00000000000002c7       0x22 /Applications/Ac6/SystemWorkbench.app/Contents/Eclipse/plugins/fr.ac6.mcu.externaltools.arm-none.macos64_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard/crtn.o
 OUTPUT(MCT_Snake.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000     0x22a6
+.debug_info     0x0000000000000000     0x22a4
  .debug_info    0x0000000000000000      0xdb0 src/config.o
- .debug_info    0x0000000000000db0      0x66c src/interrupts.o
- .debug_info    0x000000000000141c      0xa68 src/main.o
- .debug_info    0x0000000000001e84      0x400 src/system_stm32f3xx.o
- .debug_info    0x0000000000002284       0x22 startup/startup_stm32f303xe.o
+ .debug_info    0x0000000000000db0      0x66b src/interrupts.o
+ .debug_info    0x000000000000141b      0xa67 src/main.o
+ .debug_info    0x0000000000001e82      0x400 src/system_stm32f3xx.o
+ .debug_info    0x0000000000002282       0x22 startup/startup_stm32f303xe.o
 
 .debug_abbrev   0x0000000000000000      0x675
  .debug_abbrev  0x0000000000000000      0x1df src/config.o
