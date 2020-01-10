@@ -16,6 +16,11 @@
 #include "utility.h"
 
 
+volatile int8_t x1, y1, x2, y2, x3, y3, randx, randy;;
+volatile uint16_t t1, t2, adc1buffer[2];
+volatile _Bool position[8][8]={0}, zufall[8][8]={0}, fail;
+volatile TypeDefDirection direction;
+
 int main(void)
 {
 	/* start values for variables */

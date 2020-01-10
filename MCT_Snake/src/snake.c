@@ -7,10 +7,11 @@
 
 #include "snake.h"
 
-/* variables */
-
-
 void randompoint(void){
+	/* global variables */
+	extern volatile _Bool zufall[8][8];
+	extern volatile uint16_t t1, t2, randx, randy;
+	extern volatile int8_t x1, y1, x2, y2, x3, y3;
 	zufall[randx][randy] = 0;
 	randx = t1%8;
 	randy = t2%8;
@@ -24,6 +25,10 @@ void randompoint(void){
 }
 
 void resetposition(void){
+	/* global variables */
+	extern volatile _Bool position[8][8], fail;
+	extern volatile TypeDefDirection direction;
+	extern volatile int8_t x1, y1, x2, y2, x3, y3;
 	position[x1][y1]=0;
 	position[x2][y2]=0;
 	position[x3][y3]=0;
@@ -43,6 +48,11 @@ void resetposition(void){
 /* Jede Sekunde wird der Wert des von direction abgefragt und die Schlange bewegt
  * ein Feld in die entsprechende Richtung */
 void TIM3_IRQHandler(void){
+	/* global variables */
+	extern volatile _Bool position[8][8], fail;
+	extern volatile TypeDefDirection direction;
+	extern volatile int8_t x1, y1, x2, y2, x3, y3;
+	/* push snake body */
 	position[x1][y1]=0;
 	position[x2][y2]=0;
 	position[x3][y3]=0;
@@ -52,6 +62,7 @@ void TIM3_IRQHandler(void){
 	y2=y1;
 	position[x2][y2]=1;
 	position[x3][y3]=1;
+	/* select next position for snake head */
 	switch(direction){
 	case left:
 		position[--x1][y1]=1;

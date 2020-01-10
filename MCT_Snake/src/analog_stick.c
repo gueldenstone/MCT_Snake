@@ -14,7 +14,7 @@ Input:    uint16_t pointer to array with 2 values for adcbuffer
 Returns:  none
 Comment:  GPIOA (0-1), GPIOB 0, TIM2 and ADC1 (channel 1&2) used
 **************************************************************************/
-void Analog_Stick_Config(volatile uint16_t * adcbuffer){
+void Analog_Stick_Config(volatile uint16_t * dmatarget){
 	/* ########## Clock Enable ########## */
 	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
 
@@ -79,7 +79,7 @@ void Analog_Stick_Config(volatile uint16_t * adcbuffer){
 	DMA1_Channel1->CCR |= DMA_CCR_CIRC;												// circular mode enabled
 	DMA1_Channel1->CCR |= (0b1 << DMA_CCR_PSIZE_Pos) | (0b1 << DMA_CCR_MSIZE_Pos);	// peripheral & Memory size = 16bit
 	DMA1_Channel1->CNDTR = 0x2;														// number of data transfers = 2
-	DMA1_Channel1->CMAR = (uint32_t)adcbuffer;										// memory address is input pointer
+	DMA1_Channel1->CMAR = (uint32_t)dmatarget;										// memory address is input pointer
 	DMA1_Channel1->CPAR = (uint32_t)(&(ADC1->DR));									// peripheral address is ADC1.DR
 	DMA1_Channel1->CCR |= DMA_CCR_EN;												// enable DMA1
 	NVIC_EnableIRQ(DMA1_Channel1_IRQn);												// enable DMA Interrupt Handler
@@ -93,7 +93,8 @@ void Analog_Stick_Config(volatile uint16_t * adcbuffer){
 }
 
 void DMA1_Channel1_IRQHandler(void){
-
+	extern volatile uint16_t adc1buffer[2];
+	extern volatile TypeDefDirection direction;
 /* Code für Stufe 3 */
 
 	if(adc1buffer[0]<=1500 && adc1buffer[1]<=2500 && adc1buffer[1]>=1500)

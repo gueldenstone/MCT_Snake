@@ -69,6 +69,9 @@ void LED_Matrix_Config(void){
  * die jeden Punkt der Dot-Matrix in einem festen Intervall anzeigt. Dazu werden die
  * Matrizen postion und zufall überlagert. */
 void TIM6_DAC_IRQHandler(void){
+	/* global variables */
+	extern volatile _Bool position[8][8], zufall[8][8];
+	extern volatile uint16_t t1,t2;
 	/* local variables */
 	static volatile int8_t i=0,j=0;
 	static _Bool output[8][8]={0};
