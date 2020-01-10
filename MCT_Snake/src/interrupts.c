@@ -3,10 +3,10 @@
 
 
 // Externe Variablen
-extern volatile TypeDefDirection direction;
-extern volatile _Bool position[8][8], zufall[8][8],fail;
-extern volatile uint16_t t1, t2, adc1buffer[2];
-extern volatile int8_t x1,y1, x2, y2, x3, y3;
+//extern volatile TypeDefDirection direction;
+//extern volatile _Bool position[8][8], zufall[8][8],fail;
+//extern volatile uint16_t t1, t2, adc1buffer[2];
+//extern volatile int8_t x1,y1, x2, y2, x3, y3;
 
 
 /* Die ISR des Timers 6 bildet mit Hilfe der Indizes i und j eine Art for-Schleife,
@@ -14,7 +14,7 @@ extern volatile int8_t x1,y1, x2, y2, x3, y3;
  * Matrizen postion und zufall überlagert. */
 void TIM6_DAC_IRQHandler(void){
 	/* lokale Variablen */
-	static int8_t i=0,j=0;
+	static volatile int8_t i=0,j=0;
 	static _Bool output[8][8]={0};
 	/* Ausgabe */
 	output[i][j]= position[i][j] | zufall[i][j];

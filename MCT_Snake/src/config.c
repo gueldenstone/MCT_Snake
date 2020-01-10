@@ -10,11 +10,11 @@ void RCC_Config(void){
  	RCC->CR |= RCC_CR_PLLON; 																		// Activate PLL
  	while(!(RCC->CR & RCC_CR_PLLRDY)); 																// Wait for PLL to lock
 
- 	/*FLASH wait states */
+ 	/* FLASH wait states */
  	FLASH->ACR &= ~(FLASH_ACR_LATENCY_Msk);															// Reset Flash Wait states
  	FLASH->ACR |= 0b010 << FLASH_ACR_LATENCY_Pos;													// Set Flash wait states to 2
 
-  	/*SysClock anpassen */
+  	/* SysClock anpassen */
   	RCC->CFGR |= RCC_CFGR_PPRE1_DIV2; 																// PreDiv for ABP1 /2 (ABP1 36MHz max)
   	RCC->CFGR |= RCC_CFGR_SW_PLL;																	// Set PLL as Sysclock
   	while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL){} 										// Wait for switch to PLL as clock source

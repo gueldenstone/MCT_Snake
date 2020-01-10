@@ -10,25 +10,23 @@
 
 #include "stm32f3xx.h"
 #include "main.h"
-#include "config.h"
+#include "led_matrix.h"
+#include "analog_stick.h"
+#include "snake.h"
+#include "utility.h"
 
-//Variablen
-volatile int8_t randx, randy;
-volatile int8_t x1, y1, x2, y2, x3, y3;
-volatile uint16_t t1, t2=66, adc1buffer[2];
-volatile _Bool position[8][8]={0}, zufall[8][8]={0}, fail;
-volatile TypeDefDirection direction;
 
 int main(void)
 {
-	__disable_irq();				// Interrupts aus
-	RCC_Config();					// Clock Config mit 72Mhz
-	GPIO_Config(); 					// GPIO Config
-	TIM_Config();					// Timer Configuration
-	ADC_Config();					// ADC Config
-	DMA_Config();					// DMA Config
-	EXTI_Config();					// EXTI Config
-	__enable_irq();					// Interrupts an
+	/* start values for variables */
+	t1=0;
+	t2=66;
+	/* initialize all modules */
+	__disable_irq();								// Interrupts aus
+	Clock_Config();									// Clock Config mit 72Mhz
+	Analog_Stick_Config(adc1buffer);				// use analog-stick
+	LED_Matrix_Config();							// use LED-Matrix
+	__enable_irq();									// Interrupts an
 
 	randompoint();
 	ADC1->CR |= ADC_CR_ADSTART;
@@ -52,33 +50,23 @@ int main(void)
 	}
 
 }
-void randompoint(void){
-	zufall[randx][randy] = 0;
-	randx = t1%8;
-	randy = t2%8;
-	zufall[randx][randy] = 1;
-}
 
-void delay(uint32_t usec){
-	TIM7->ARR = usec-1;
-	TIM7->CR1 |= TIM_CR1_CEN;
-	while(!(TIM7->SR & TIM_SR_UIF)){}
-	TIM7->SR &= ~TIM_SR_UIF;
-}
+void Clock_Config(void){
+	/* PLL Config */
+	RCC->CR &= ~(RCC_CR_PLLON); 																	// Deactivate PLL
+	while(RCC->CR & RCC_CR_PLLRDY){}																// Wait for PLL to stop
+	RCC->CFGR |= RCC_CFGR_PLLSRC_HSI_PREDIV | RCC_CFGR_PLLMUL9;										// Set PLL to input HSI, Multiplicator = 9
+ 	RCC->CR |= RCC_CR_PLLON; 																		// Activate PLL
+ 	while(!(RCC->CR & RCC_CR_PLLRDY)); 																// Wait for PLL to lock
 
-void resetposition(void){
-	position[x1][y1]=0;
-	position[x2][y2]=0;
-	position[x3][y3]=0;
-	x1=4;
-	y1=4;
-	x2=4;
-	y2=3;
-	x3=4;
-	y3=2;
-	position[x1][y1]=1;
-	position[x2][y2]=1;
-	position[x3][y3]=1;
-	fail=0;
-	direction = up;
+ 	/* FLASH wait states */
+ 	FLASH->ACR &= ~(FLASH_ACR_LATENCY_Msk);															// Reset Flash Wait states
+ 	FLASH->ACR |= 0b010 << FLASH_ACR_LATENCY_Pos;													// Set Flash wait states to 2
+
+  	/* SysClock anpassen */
+  	RCC->CFGR |= RCC_CFGR_PPRE1_DIV2; 																// PreDiv for ABP1 /2 (ABP1 36MHz max)
+  	RCC->CFGR |= RCC_CFGR_SW_PLL;																	// Set PLL as Sysclock
+  	while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL){} 										// Wait for switch to PLL as clock source
+
+  	SystemCoreClockUpdate();																		//WICHTIG! updated die Variable SystemCoreClock, die als Berechnungsgrundlage für Timer gebraucht werden kann.
 }
