@@ -2,7 +2,7 @@
 #include "interrupts.h"
 
 
-// Externe Variablen
+// Globale Variablen
 extern volatile TypeDefDirection direction;
 extern volatile _Bool position[8][8], zufall[8][8],fail;
 extern volatile uint16_t t1, t2, adc1buffer[2];
@@ -41,16 +41,8 @@ void TIM6_DAC_IRQHandler(void){
 /* Jede Sekunde wird der Wert des von direction abgefragt und die Schlange bewegt
  * ein Feld in die entsprechende Richtung */
 void TIM3_IRQHandler(void){
-	position[x1][y1]=0;
-	position[x2][y2]=0;
-	position[x3][y3]=0;
-	x3=x2;
-	x2=x1;
-	y3=y2;
-	y2=y1;
-	position[x2][y2]=1;
-	position[x3][y3]=1;
-	switch(direction){
+	passthrough();				// Koordinaten verschieben
+	switch(direction){			// neue Richtung auswählen
 	case left:
 		position[--x1][y1]=1;
 		break;
@@ -66,7 +58,7 @@ void TIM3_IRQHandler(void){
 	default:
 		break;
 	}
-	if(x1>7 || x1<0 || y1>7 || y1<0)
+	if(x1>7 || x1<0 || y1>7 || y1<0)		// Abfrage, ob sich die neue Position außerhalb der LED-Matrix befindet
 		fail=1;
 	if(x1==x2 && y1==y2)
 		fail=1;
@@ -102,7 +94,7 @@ void DMA1_Channel1_IRQHandler(void){
 //	else
 //	position[x][y] = 1;						//Falls nicht in der Mitte -> aktuelle Position setzten
 
-	//ISR finished
+	// ISR finished
 	DMA1->IFCR |= DMA_IFCR_CTCIF1;
 }
 void EXTI0_IRQHandler(void){
@@ -114,14 +106,15 @@ void EXTI0_IRQHandler(void){
 	EXTI->PR |= EXTI_PR_PR0;
 }
 
+/* Koordinaten verschieben */
 void passthrough(void){
-	position[x1][y1]=0;
+	position[x1][y1]=0;			// zurücksetzten
 	position[x2][y2]=0;
 	position[x3][y3]=0;
-	x3=x2;
+	x3=x2;						// x3/y3 wird zu x2/y2 und x2/y2 wird zu x1/y1
 	x2=x1;
 	y3=y2;
 	y2=y1;
-	position[x2][y2]=1;
+	position[x2][y2]=1;			// neue Position für den Schlangenkörper definieren
 	position[x3][y3]=1;
 }

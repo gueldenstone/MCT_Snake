@@ -4,27 +4,27 @@
 /* Functions -----------------------------------------------------------------*/
 void RCC_Config(void){
 	/* PLL Config */
-	RCC->CR &= ~(RCC_CR_PLLON); 																	// Deactivate PLL
-	while(RCC->CR & RCC_CR_PLLRDY){}																// Wait for PLL to stop
-	RCC->CFGR |= RCC_CFGR_PLLSRC_HSI_PREDIV | RCC_CFGR_PLLMUL9;										// Set PLL to input HSI, Multiplicator = 9
- 	RCC->CR |= RCC_CR_PLLON; 																		// Activate PLL
- 	while(!(RCC->CR & RCC_CR_PLLRDY)); 																// Wait for PLL to lock
+	RCC->CR &= ~(RCC_CR_PLLON); 										// Deactivate PLL
+	while(RCC->CR & RCC_CR_PLLRDY){}									// Wait for PLL to stop
+	RCC->CFGR |= RCC_CFGR_PLLSRC_HSI_PREDIV | RCC_CFGR_PLLMUL9;			// Set PLL to input HSI, Multiplicator = 9
+ 	RCC->CR |= RCC_CR_PLLON; 											// Activate PLL
+ 	while(!(RCC->CR & RCC_CR_PLLRDY)); 									// Wait for PLL to lock
 
  	/*FLASH wait states */
- 	FLASH->ACR &= ~(FLASH_ACR_LATENCY_Msk);															// Reset Flash Wait states
- 	FLASH->ACR |= 0b010 << FLASH_ACR_LATENCY_Pos;													// Set Flash wait states to 2
+ 	FLASH->ACR &= ~(FLASH_ACR_LATENCY_Msk);								// Reset Flash Wait states
+ 	FLASH->ACR |= 0b010 << FLASH_ACR_LATENCY_Pos;						// Set Flash wait states to 2
 
   	/*SysClock anpassen */
-  	RCC->CFGR |= RCC_CFGR_PPRE1_DIV2; 																// PreDiv for ABP1 /2 (ABP1 36MHz max)
-  	RCC->CFGR |= RCC_CFGR_SW_PLL;																	// Set PLL as Sysclock
-  	while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL){} 										// Wait for switch to PLL as clock source
+  	RCC->CFGR |= RCC_CFGR_PPRE1_DIV2; 									// PreDiv for ABP1 /2 (ABP1 36MHz max)
+  	RCC->CFGR |= RCC_CFGR_SW_PLL;										// Set PLL as Sysclock
+  	while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL){} 			// Wait for switch to PLL as clock source
 
-  	SystemCoreClockUpdate();																		//WICHTIG! updated die Variable SystemCoreClock, die als Berechnungsgrundlage für Timer gebraucht werden kann.
+  	SystemCoreClockUpdate();											// updated die Variable SystemCoreClock
 
 	/* Peripherie Clock */
 
   	//Timer
-  	RCC->APB1ENR |= RCC_APB1ENR_TIM6EN | RCC_APB1ENR_TIM2EN | RCC_APB1ENR_TIM7EN | RCC_APB1ENR_TIM3EN; //Enable Timer 2, 6 & 7
+  	RCC->APB1ENR |= RCC_APB1ENR_TIM6EN | RCC_APB1ENR_TIM2EN | RCC_APB1ENR_TIM7EN | RCC_APB1ENR_TIM3EN; //Enable Timer 2, 3, 6 & 7
 
 	//GPIO
 	RCC->AHBENR |= RCC_AHBENR_GPIOAEN; //GPIO A
@@ -96,7 +96,7 @@ void GPIO_Config(void){
 	 * GPIOx_PUPDR_PU
 	 * GPIOx_PUPDR_PD
 	 */
-	GPIOB->PUPDR |= GPIOx_PUPDR_PU << GPIO_PUPDR_PUPDR0_Pos;
+	GPIOB->PUPDR |= GPIOx_PUPDR_PU << GPIO_PUPDR_PUPDR0_Pos; // Pull-Up an PB0 (Taster)
 
 	/* ########## Reset Pins to Default ##########
 	 * Port Reset		GPIO<port>->ODR &= ~(0xFFFF)
@@ -111,20 +111,20 @@ void GPIO_Config(void){
 void TIM_Config(void){
 
 	//Timer 6, Timing für Display
-	TIM6->PSC = 71; 							// Prescaler setzten, ARR in usec
+	TIM6->PSC = (SystemCoreClock/1000000); 		// Prescaler setzten, ARR in usec
 	TIM6->ARR = 155; 							// set counter value T_LED = 10ms => T_matrix = 10ms/64 = 156,25usec
 	TIM6->DIER |= TIM_DIER_UIE; 				// Enable Interrupt on Update
 	TIM6->CR1 |= TIM_CR1_CEN;					// Enable Timer 6
 	NVIC_EnableIRQ(TIM6_DAC_IRQn); 				// Enable NVIC on TIM6
 
 	//Timer 7, Delay Timer
-	TIM7->PSC = 7199; 							// Prescaler setzten, ARR in 0,1ms
+	TIM7->PSC = (SystemCoreClock/10000)-1; 		// Prescaler setzten, ARR in 0,1ms
 	TIM7->CR1 |= TIM_CR1_OPM;					// One-Pulse-Mode
 	TIM7->DIER |= TIM_DIER_UIE; 				// Enable Interrupt on Update
 
 
 	//Timer 2, Timing für ADC Conv
-	TIM2->PSC = 7199;							// Prescaler setzten, ARR in 0,1ms
+	TIM2->PSC = (SystemCoreClock/10000)-1;		// Prescaler setzten, ARR in 0,1ms
 	TIM2->ARR = 99; 							// set counter value, every 10msec ADC Conversion
 	TIM2->CR2 |= 0b010 << TIM_CR2_MMS_Pos; 		// Trigger event on Update
 	TIM2->DIER |= TIM_DIER_UIE; 				// Enable Interrupt on Update
@@ -140,7 +140,6 @@ void TIM_Config(void){
 
 void ADC_Config(void){
 	ADC1_2_COMMON->CCR |= (0b01 << 16); 		// Synchroner ADC-Clock mit Vorteiler 1
-
 	/* ADC1 Config */
 	ADC1->SQR1 |= 0x1;							// regular sequence length = 2
 	ADC1->SQR1 |= 0x1 << ADC_SQR1_SQ1_Pos; 		// 1st conv. in regular sequence: Channel 1 (PA0)
@@ -162,9 +161,10 @@ void ADC_Config(void){
 	while ((ADC1->CR & ADC_CR_ADCAL) != 0){}  	// Warte bis Kalibrierung abgeschlossen
 	ADC1->CR |= ADC_CR_ADEN; 					// Enable ADC
 	while((ADC1->ISR & ADC_ISR_ADRD) == 0){}  	// Warte bis ADC bereit
+
 }
 
-extern volatile uint16_t adc1buffer[2];
+extern volatile uint16_t adc1buffer[2];		//globale Variable (in main.c)
 void DMA_Config(void){
 	//DMA Channel 1 für ADC1
 	DMA1_Channel1->CCR |= DMA_CCR_TCIE;												// Interrupt after transfer
