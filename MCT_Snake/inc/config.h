@@ -6,6 +6,7 @@
 #include "main.h"
 
 /* Defines -------------------------------------------------------------------*/
+
 /* ########## GPIO MODES ########## */
 #define GPIOx_MODER_INPUT		0b00
 #define GPIOx_MODER_OUTPUT 		0b01

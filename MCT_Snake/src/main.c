@@ -50,7 +50,6 @@ int main(void)
 			randompoint();							// neuen Zufallspunkt erzeugen
 			NVIC_EnableIRQ(DMA1_Channel1_IRQn);		// Auslesen des ADC wieder starten
 		}
-		__WFI();									// Zwischen Ein- bzw. Ausgabe "schlafen"
 	}
 
 }
